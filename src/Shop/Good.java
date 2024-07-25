@@ -1,6 +1,10 @@
 package Shop;
 
+import java.util.ArrayList;
+
 public class Good {
+
+    private static ArrayList<Good> goods = new ArrayList<>();
     private final String name;
     private double price;
     private double rating;
@@ -9,6 +13,7 @@ public class Good {
         this.name = name;
         this.price = price;
         this.rating = rating;
+        goods.add(this);
     }
 
     public String getName() {
@@ -29,6 +34,10 @@ public class Good {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public static ArrayList<Good> getGoods(){
+        return goods;
     }
 
     @Override

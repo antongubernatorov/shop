@@ -3,6 +3,8 @@ package Shop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static Shop.Good.getGoods;
+
 public class ShopManager implements ShopManagerInterface {
 
     HashMap<Integer, Category> categories = new HashMap<>();
@@ -13,8 +15,7 @@ public class ShopManager implements ShopManagerInterface {
     private static int goodId = -1;
 
     public int generateId(int id){
-        id += 1;
-        return id;
+        return ++id;
     }
 
     public static int getCategoryId() {
@@ -31,16 +32,18 @@ public class ShopManager implements ShopManagerInterface {
 
     @Override
     public void createCategory(String name) {
-        int categoryId = generateId(getCategoryId());
+        categoryId = generateId(getCategoryId());
         Category category = new Category(name);
         categories.put(categoryId, category);
     }
 
     @Override
-    public ArrayList<Category> showCategories(int categoryId) {
-        ArrayList<Category> categoriesList = new ArrayList<>();
-        categoriesList.addAll(categories.values());
-        return categoriesList;
+    public void showCategories() {
+        if(categories.isEmpty()){
+            System.out.println("Категорий не существует");
+        } else {
+            System.out.println(categories);
+        }
     }
 
     @Override
@@ -73,7 +76,7 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public void buyGood(int goodId) {
+    public void buyGood(int goodId, int userId) {
 
     }
 
@@ -90,5 +93,10 @@ public class ShopManager implements ShopManagerInterface {
     @Override
     public void removeGoodFromBasket(int userId, int goodId) {
 
+    }
+
+    @Override
+    public ArrayList<Good> showAllGoods() {
+        return getGoods();
     }
 }
