@@ -1,6 +1,6 @@
 package Shop;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ShopManagerInterface {
     void createCategory(String name);
@@ -9,11 +9,12 @@ public interface ShopManagerInterface {
     void deleteCategory(int categoryId);
 
     void addGoodToCategory(Good good, int categoryId);
+    Good createGood(String name, double price, double rating);
     void buyGood(int goodId, int userId);
-    void deleteGoodFromCategory(int goodId);
-
-    void addGoodToBasket(int userId, int goodId);
+    void deleteGoodFromCategory(int goodId, int categoryId);
     void removeGoodFromBasket(int userId, int goodId);
+    void createUser(String login, String password);
 
-    ArrayList<Good> showAllGoods();
+    void checkBasket(int userId);
+    HashMap<Integer, Good> showAllGoods();
 }
