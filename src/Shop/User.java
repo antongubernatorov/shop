@@ -3,12 +3,15 @@ package Shop;
 public class User {
     private String login;
     private String password;
-    Basket basket;
+    private Basket basket;
 
-    public User(String login, String password, Basket basket) {
+    private final int id;
+
+    public User(int id, String login, String password, Basket basket) {
         this.login = login;
         this.password = password;
         this.basket = basket;
+        this.id = id;
     }
 
     public void setLogin(String login) {
@@ -23,7 +26,15 @@ public class User {
         return basket;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public boolean hasGoodInBasket(int id){
+        return basket.getGood(id) != null;
+    }
+
+    public void buyGood(Good good){
+        this.basket.addGood(good);
+    }
+
+    public void removeGood(int id){
+        basket.deleteGood(id);
     }
 }

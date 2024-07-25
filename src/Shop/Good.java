@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class Good {
 
-    private static ArrayList<Good> goods = new ArrayList<>();
     private final String name;
     private double price;
     private double rating;
+    private final int id;
 
-    public Good(String name, double price, double rating) {
+    public Good(int id, String name, double price, double rating) {
         this.name = name;
         this.price = price;
         this.rating = rating;
-        goods.add(this);
+        this.id = id;
     }
 
     public String getName() {
@@ -36,10 +36,6 @@ public class Good {
         this.rating = rating;
     }
 
-    public static ArrayList<Good> getGoods(){
-        return goods;
-    }
-
     @Override
     public String toString() {
         return "Good{" +
@@ -47,5 +43,9 @@ public class Good {
                 ", price=" + price +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 }
