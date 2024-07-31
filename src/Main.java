@@ -18,8 +18,8 @@ public class Main {
         shopManager.addGoodToCategory(tvorog, 0);
         shopManager.addGoodToCategory(chicken, 1);
         shopManager.createUser("Anton", "Hello123");
-        shopManager.buyGood(1, 0);
-        shopManager.buyGood(2, 0);
-        shopManager.checkBasket(0);
+        shopManager.addGoodToBasket(1, 0);
+        shopManager.addGoodToBasket(2, 0);
+        shopManager.buyBasket(0);
     }
 }

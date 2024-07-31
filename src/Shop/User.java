@@ -30,7 +30,7 @@ public class User {
         return basket.getGood(id) != null;
     }
 
-    public void buyGood(Good good){
+    public void addGoodToBasket(Good good){
         this.basket.addGood(good);
     }
 

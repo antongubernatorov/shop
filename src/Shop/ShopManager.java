@@ -8,6 +8,7 @@ public class ShopManager implements ShopManagerInterface {
     HashMap<Integer, Category> categories = new HashMap<>();
     HashMap<Integer, User> users = new HashMap<>();
     HashMap<Integer, Good> goods = new HashMap<>();
+    HashMap<Integer, Basket> baskets = new HashMap<>();
 
     public static ArrayList<Integer> goodIds = new ArrayList<>();
     private static int categoryId = -1;
@@ -80,13 +81,14 @@ public class ShopManager implements ShopManagerInterface {
         goodId = generateId(getGoodId());
         goodIds.add(goodId);
         Good good = new Good(goodId, name, price, rating);
-        System.out.println(goodId);
         goods.put(goodId, good);
         return good;
     }
 
+    //добавить сортировку
+    //добавить функционал по добавлению в корзину
     @Override
-    public void buyGood(int goodId, int userId) {
+    public void addGoodToBasket(int goodId, int userId) {
         Good good = goods.get(goodId);
         if (good == null){
             System.out.println("Такого товара не существует");
@@ -95,7 +97,28 @@ public class ShopManager implements ShopManagerInterface {
             System.out.println("Такого пользователя не существует");
         }
         User user = users.get(userId);
-        user.buyGood(good);
+        user.addGoodToBasket(good);
+        baskets.put(userId, user.getBasket());
+    }
+
+    @Override
+    public void buyBasket(int userId) {
+        User user = users.get(userId);
+        if(user == null){
+            System.out.println("Такого пользователя не существует");
+        } else{
+            double total = 0;
+            Basket basket = user.getBasket();
+            System.out.println("Продукты       Цена");
+            System.out.println("--------------------------------------");
+            for(Good el : basket.getBasketHistory()){
+                System.out.printf("%-11s %7.2f%n", el.getName(), el.getPrice());
+                total += el.getPrice();
+            }
+            System.out.println("--------------------------------------");
+            System.out.printf("%-12s %.2f","Итого:", total);
+            basket.clearBasket();
+        }
     }
 
     //нужно 100% отрефакторить

@@ -10,7 +10,8 @@ public interface ShopManagerInterface {
 
     void addGoodToCategory(Good good, int categoryId);
     Good createGood(String name, double price, double rating);
-    void buyGood(int goodId, int userId);
+    void addGoodToBasket(int goodId, int userId);
+    void buyBasket(int userId);
     void deleteGoodFromCategory(int goodId, int categoryId);
     void removeGoodFromBasket(int userId, int goodId);
     void createUser(String login, String password);

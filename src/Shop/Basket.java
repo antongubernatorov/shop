@@ -23,4 +23,8 @@ public class Basket {
     public void deleteGood(int id){
         buyHistory.remove(id);
     }
+
+    public void clearBasket(){
+        buyHistory.clear();
+    }
 }
