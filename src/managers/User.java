@@ -1,4 +1,4 @@
-package Shop;
+package managers;
 
 public class User {
     private String login;

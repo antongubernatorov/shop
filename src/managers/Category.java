@@ -1,6 +1,7 @@
-package Shop;
+package managers;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Category {
     private final String name;
@@ -31,5 +32,26 @@ public class Category {
 
     public void deleteGood(Good good){
         goods.remove(good);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(name, category.name) && Objects.equals(goods, category.goods);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, goods);
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", goods=" + goods +
+                '}';
     }
 }

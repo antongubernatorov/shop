@@ -1,18 +1,22 @@
-package Shop;
+package managers;
+
+import exceptions.ManagerSaveException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ShopManager implements ShopManagerInterface {
 
     HashMap<Integer, Category> categories = new HashMap<>();
-    HashMap<Integer, User> users = new HashMap<>();
+    public HashMap<Integer, User> users = new HashMap<>();
     HashMap<Integer, Good> goods = new HashMap<>();
     HashMap<Integer, Basket> baskets = new HashMap<>();
 
     public static ArrayList<Integer> goodIds = new ArrayList<>();
     private static int categoryId = -1;
-    private static int userId = -1;
+    private int userId = -1;
     private static int goodId = -1;
 
     public int generateId(int id){
@@ -23,7 +27,7 @@ public class ShopManager implements ShopManagerInterface {
         return categoryId;
     }
 
-    public static int getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -77,12 +81,11 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public Good createGood(String name, double price, double rating) {
+    public void createGood(Good good) throws ManagerSaveException {
         goodId = generateId(getGoodId());
+        good.setId(goodId);
         goodIds.add(goodId);
-        Good good = new Good(goodId, name, price, rating);
         goods.put(goodId, good);
-        return good;
     }
 
     //добавить сортировку
@@ -152,14 +155,6 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public void createUser(String login, String password) {
-        int idUser = generateId(userId);
-        Basket userBasket = new Basket();
-        User user = new User(idUser, login, password, userBasket);
-        users.put(idUser, user);
-    }
-
-    @Override
     public void checkBasket(int userId) {
         if(!users.containsKey(userId)){
             System.out.println("Такого пользователя не существует");
@@ -172,6 +167,12 @@ public class ShopManager implements ShopManagerInterface {
 
     @Override
     public HashMap<Integer, Good> showAllGoods() {
-        return null;
+        return goods;
+    }
+
+    public Map<Integer, Good> sortGoodsByPrice() {
+        Map<Integer, Good> sortedGoods = new TreeMap<>(goods);
+        System.out.println(sortedGoods);
+        return sortedGoods;
     }
 }
