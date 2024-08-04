@@ -2,12 +2,13 @@ package managers;
 
 import exceptions.ManagerSaveException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ShopManagerInterface {
     void createCategory(String name);
     void showCategories();
-    void showGoodsPerCategory(int categoryId);
+    ArrayList<Good> showGoodsPerCategory(int categoryId);
     void deleteCategory(int categoryId);
 
     void addGoodToCategory(Good good, int categoryId);

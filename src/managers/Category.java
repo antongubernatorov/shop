@@ -24,10 +24,12 @@ public class Category {
         this.goods.add(good);
     }
 
-    public void showGoods(){
+    public ArrayList<Good> showGoods(){
+        ArrayList<Good> goodsList = new ArrayList<>();
         for(Good el : goods){
-            System.out.println(el);
+            goodsList.add(el);
         }
+        return goodsList;
     }
 
     public void deleteGood(Good good){

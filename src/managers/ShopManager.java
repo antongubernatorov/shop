@@ -2,22 +2,19 @@ package managers;
 
 import exceptions.ManagerSaveException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ShopManager implements ShopManagerInterface {
 
-    HashMap<Integer, Category> categories = new HashMap<>();
+    public static HashMap<Integer, Category> categories = new HashMap<>();
     public HashMap<Integer, User> users = new HashMap<>();
-    HashMap<Integer, Good> goods = new HashMap<>();
+    public static HashMap<Integer, Good> goods = new HashMap<>();
     HashMap<Integer, Basket> baskets = new HashMap<>();
 
     public static ArrayList<Integer> goodIds = new ArrayList<>();
     private static int categoryId = -1;
     private int userId = -1;
-    private static int goodId = -1;
+    public static int goodId = -1;
 
     public int generateId(int id){
         return ++id;
@@ -52,12 +49,14 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public void showGoodsPerCategory(int categoryId) {
+    public ArrayList<Good> showGoodsPerCategory(int categoryId) {
         if(categories.containsKey(categoryId)){
             Category category = categories.get(categoryId);
-            category.showGoods();
+            ArrayList<Good> goods1 = category.showGoods();
+            return goods1;
         } else {
             System.out.println("Такой категории не существует");
+            return null;
         }
     }
 
