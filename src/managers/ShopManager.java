@@ -2,6 +2,8 @@ package managers;
 
 import exceptions.ManagerSaveException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ShopManager implements ShopManagerInterface {
@@ -13,7 +15,6 @@ public class ShopManager implements ShopManagerInterface {
 
     public static ArrayList<Integer> goodIds = new ArrayList<>();
     private static int categoryId = -1;
-    private int userId = -1;
     public static int goodId = -1;
 
     public int generateId(int id){
@@ -22,10 +23,6 @@ public class ShopManager implements ShopManagerInterface {
 
     public static int getCategoryId() {
         return categoryId;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public static int getGoodId() {
@@ -109,6 +106,10 @@ public class ShopManager implements ShopManagerInterface {
         if(user == null){
             System.out.println("Такого пользователя не существует");
         } else{
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("Дата: dd.MM.yyyy HH:mm:ss");
+            LocalDateTime localDateTime = LocalDateTime.now();
+            System.out.println(localDateTime.format(dateTimeFormatter));
+            System.out.println(" ");
             double total = 0;
             Basket basket = user.getBasket();
             System.out.println("Продукты       Цена");
@@ -154,14 +155,16 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public void checkBasket(int userId) {
+    public Basket checkBasket(int userId) {
+        Basket basket = null;
         if(!users.containsKey(userId)){
             System.out.println("Такого пользователя не существует");
         } else {
             User user = users.get(userId);
-            Basket basket = user.getBasket();
+            basket = user.getBasket();
             System.out.println(basket.getBasketHistory());
         }
+        return basket;
     }
 
     @Override

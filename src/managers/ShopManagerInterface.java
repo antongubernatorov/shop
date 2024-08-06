@@ -17,6 +17,6 @@ public interface ShopManagerInterface {
     void buyBasket(int userId);
     void deleteGoodFromCategory(int goodId, int categoryId);
     void removeGoodFromBasket(int userId, int goodId);
-    void checkBasket(int userId);
+    Basket checkBasket(int userId);
     HashMap<Integer, Good> showAllGoods();
 }
