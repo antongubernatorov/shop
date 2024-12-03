@@ -28,4 +28,8 @@ public class Category {
             System.out.println(el);
         }
     }
+
+    public void deleteGood(Good good){
+        goods.remove(good);
+    }
 }

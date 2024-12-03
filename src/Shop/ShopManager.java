@@ -3,13 +3,14 @@ package Shop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static Shop.Good.getGoods;
-
 public class ShopManager implements ShopManagerInterface {
 
     HashMap<Integer, Category> categories = new HashMap<>();
-    HashMap<User, Basket> usersBasket = new HashMap<>();
     HashMap<Integer, User> users = new HashMap<>();
+    HashMap<Integer, Good> goods = new HashMap<>();
+    HashMap<Integer, Basket> baskets = new HashMap<>();
+
+    public static ArrayList<Integer> goodIds = new ArrayList<>();
     private static int categoryId = -1;
     private static int userId = -1;
     private static int goodId = -1;
@@ -76,27 +77,101 @@ public class ShopManager implements ShopManagerInterface {
     }
 
     @Override
-    public void buyGood(int goodId, int userId) {
+    public Good createGood(String name, double price, double rating) {
+        goodId = generateId(getGoodId());
+        goodIds.add(goodId);
+        Good good = new Good(goodId, name, price, rating);
+        goods.put(goodId, good);
+        return good;
+    }
 
+    //добавить сортировку
+    //добавить функционал по добавлению в корзину
+    @Override
+    public void addGoodToBasket(int goodId, int userId) {
+        Good good = goods.get(goodId);
+        if (good == null){
+            System.out.println("Такого товара не существует");
+        }
+        if(!users.containsKey(userId)){
+            System.out.println("Такого пользователя не существует");
+        }
+        User user = users.get(userId);
+        user.addGoodToBasket(good);
+        baskets.put(userId, user.getBasket());
     }
 
     @Override
-    public void deleteGoodFromCategory(int goodId) {
-
+    public void buyBasket(int userId) {
+        User user = users.get(userId);
+        if(user == null){
+            System.out.println("Такого пользователя не существует");
+        } else{
+            double total = 0;
+            Basket basket = user.getBasket();
+            System.out.println("Продукты       Цена");
+            System.out.println("--------------------------------------");
+            for(Good el : basket.getBasketHistory()){
+                System.out.printf("%-11s %7.2f%n", el.getName(), el.getPrice());
+                total += el.getPrice();
+            }
+            System.out.println("--------------------------------------");
+            System.out.printf("%-12s %.2f","Итого:", total);
+            basket.clearBasket();
+        }
     }
 
+    //нужно 100% отрефакторить
     @Override
-    public void addGoodToBasket(int userId, int goodId) {
-
+    public void deleteGoodFromCategory(int goodId, int categoryId) {
+        if(!categories.containsKey(categoryId)){
+            System.out.println("Такой категории не существует");
+        } else {
+            Category category = categories.get(categoryId);
+            ArrayList<Good> goodList = category.getGoods();
+            for(Good el:goodList){
+                if(el.getId() == goodId){
+                    category.deleteGood(goods.get(goodId));
+                }
+            }
+        }
     }
 
     @Override
     public void removeGoodFromBasket(int userId, int goodId) {
-
+        if(!users.containsKey(userId)){
+            System.out.println("Такого пользователя не существует");
+        } else {
+            User user = users.get(userId);
+            if(user.hasGoodInBasket(goodId)){
+                user.removeGood(goodId);
+            } else {
+                System.out.println("Товара в корзине нет");
+            }
+        }
     }
 
     @Override
-    public ArrayList<Good> showAllGoods() {
-        return getGoods();
+    public void createUser(String login, String password) {
+        int idUser = generateId(userId);
+        Basket userBasket = new Basket();
+        User user = new User(idUser, login, password, userBasket);
+        users.put(idUser, user);
+    }
+
+    @Override
+    public void checkBasket(int userId) {
+        if(!users.containsKey(userId)){
+            System.out.println("Такого пользователя не существует");
+        } else {
+            User user = users.get(userId);
+            Basket basket = user.getBasket();
+            System.out.println(basket.getBasketHistory());
+        }
+    }
+
+    @Override
+    public HashMap<Integer, Good> showAllGoods() {
+        return null;
     }
 }
